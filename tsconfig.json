@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
     "useDefineForClassFields": true,
-    "module": "ESNext",
+    "module": "commonjs",
+    "target":"ESNEXT",
+    "outDir":"./build",
+    "rootDir":"./src" /* assuming that your code live in ./src */,
+    "moduleResolution":"node",
+    "baseUrl":".",
     "lib": ["ESNext", "DOM"],
-    "moduleResolution": "Node",
-    "strict": true,
+    "strict": false,
     "resolveJsonModule": true,
     "isolatedModules": false,
     "esModuleInterop": true,
