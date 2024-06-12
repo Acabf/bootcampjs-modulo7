@@ -83,3 +83,8 @@ export const sumarPuntuacion = (puntos: number) : void => {
   partida.puntuacion += puntos;
 };
 
+// Puntuación acumulada para el test
+export const sumarPuntuacionAcumulada = (puntos: number) => {
+  const puntuacionFinal = partida.puntuacion + puntos;
+  return puntuacionFinal;
+};
