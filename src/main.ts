@@ -1,12 +1,11 @@
-import {pideCartaBoton, plantarseBoton, nuevaPartidaBoton} from "./model";
-import {juegoActivo, dameCarta, finalizarPartida, muestraPuntuacion, resetPartida} from "./motor";
-import {mostrarMensajeFinal} from "./ui";
+import {partida} from "./model";
+import {dameCarta, pideCartaBoton, plantarseBoton, nuevaPartidaBoton, finalizarPartida, mostrarMensajeFinal, muestraPuntuacion, resetPartida} from "./ui";
 
 document.addEventListener("DOMContentLoaded", dameCarta);
 
 // Evento para pedir carta
 pideCartaBoton.addEventListener('click', () => {
-    if (juegoActivo) {
+    if (partida.juegoActivo) {
         dameCarta();
     }
 });

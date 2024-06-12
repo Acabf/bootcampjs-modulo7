@@ -1,13 +1,29 @@
-import {scoreDiv, imagenCarta, pideCartaBoton, plantarseBoton, nuevaPartidaBoton} from "./model";
+import {partida} from "./model";
 
+// Da la partida por inactiva
 
-// Variables iniciales
-export let puntuacion = 0;
-export let juegoActivo = true;
+export const juegoAcabado = () => partida.juegoActivo = false;
 
-// Muestra la puntuación actual
-export const muestraPuntuacion = () => {
-  scoreDiv.textContent = `Puntuación: ${puntuacion}`;
+// Check de Game Over
+
+export const checkGameOver = () : boolean => partida.puntuacion > 7.5;
+
+// Devuelve mensaje en función de la puntuación
+export const MensajeFinal = () => {
+    let mensaje= "";
+    if (partida.puntuacion > 7.5) {
+        mensaje = "Game Over";
+    } else if (partida.puntuacion === 7.5) {
+        mensaje = "¡Lo has clavado! ¡Enhorabuena!";
+    } else if (partida.puntuacion >= 6 && partida.puntuacion < 7.5) {
+        mensaje = "Casi casi...";
+    } else if (partida.puntuacion === 5) {
+        mensaje = "Te ha entrado el canguelo eh?";
+    } else if (partida.puntuacion < 4) {
+        mensaje = "Has sido muy conservador.";
+    }
+
+    return mensaje;
 };
 
 // Saca un numero aleatorio
@@ -53,13 +69,6 @@ switch (carta) {
 }
 };
 
-// Cambia la imagen de la carta que se ha sacado
-export const mostrarCarta = (urlCarta : string) : void =>  {
-  if(imagenCarta !== null && imagenCarta !== undefined && imagenCarta instanceof HTMLImageElement) {   
-      imagenCarta.src = urlCarta
-  }
-};
-
 // Comprueba el valor de la carta sacada
 export const comprobarCarta = (carta: number) => {
   if (carta >= 10) {
@@ -71,54 +80,6 @@ export const comprobarCarta = (carta: number) => {
 
 // Suma la puntuacion de carta obtenida al contador de puntuacion
 export const sumarPuntuacion = (puntos: number) : void => {
-  puntuacion += puntos;
+  partida.puntuacion += puntos;
 };
 
-// Comprueba si has superado la puntuación máxima permitida y finaliza la partida
-export const checkEstadoPartida = () : void => {
-  if (puntuacion > 7.5) {
-      juegoActivo = false;
-      alert("Game Over");
-      plantarseBoton.style.display = 'none';
-      pideCartaBoton.style.display = 'none';
-      nuevaPartidaBoton.style.display = 'block';
-      puntuacion = 0;
-  }
-};
-
-// Resetea las variables para iniciar una nueva partida
-export const resetPartida = () : void => {
-  if(imagenCarta !== null && imagenCarta !== undefined && imagenCarta instanceof HTMLImageElement) {   
-  imagenCarta.src = 'https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg';
-  plantarseBoton.style.display = 'block';
-  pideCartaBoton.style.display = 'block';
-  nuevaPartidaBoton.style.display = 'none';
-  puntuacion = 0;
-  juegoActivo = true;
-  }
-};
-
-// Actualiza las variables para finzar la partida actual
-export const finalizarPartida = () : void => {
-  juegoActivo = false;
-  plantarseBoton.style.display = 'none';
-  pideCartaBoton.style.display = 'none';
-  nuevaPartidaBoton.style.display = 'block';
-};
-
-// Agrega puntuación de la carta
-export const actualizarPuntuacion = (carta: number) => {
-  sumarPuntuacion(comprobarCarta(carta));
-  document.addEventListener("DOMContentLoaded", muestraPuntuacion);
-  muestraPuntuacion();
-  checkEstadoPartida();
-};
-
-// Devuelve una carta aleatoria
-export const dameCarta = () : void => {
-  const numeroAleatorio = obtenerNumeroAleatorio();
-  const carta = obtenerNumeroCarta(numeroAleatorio);
-  const urlCarta = obtenerUrlCarta(carta);
-  mostrarCarta(urlCarta);
-  actualizarPuntuacion(carta);
-};
